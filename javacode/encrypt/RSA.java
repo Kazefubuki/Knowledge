@@ -1,9 +1,5 @@
 package encrypt;
 
-import com.google.common.collect.Maps;
-import org.apache.commons.lang3.StringUtils;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +9,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -262,7 +259,7 @@ public class RSA {
             secureRandom = SecureRandom.getInstance(randomAlgorithm.getRandomAlgorithm());
         }
 
-        if (StringUtils.isNotBlank(seed)) {
+        if (null != seed && seed.isEmpty()) {
             secureRandom.setSeed(seed.getBytes(StandardCharsets.UTF_8));
         }
 
@@ -270,7 +267,7 @@ public class RSA {
         KeyPair keyPair = generator.generateKeyPair();
         PublicKey publicKey = keyPair.getPublic();
         PrivateKey privateKey = keyPair.getPrivate();
-        Map<String, String> keyMap = Maps.newHashMap();
+        Map<String, String> keyMap = new HashMap<>();
         keyMap.put("publicKey", Base64.getEncoder().encodeToString(publicKey.getEncoded()));
         keyMap.put("privateKey", Base64.getEncoder().encodeToString(privateKey.getEncoded()));
         return keyMap;

@@ -195,3 +195,49 @@ ivKey同理
 `SignAlgorithmEnum` 为`加签`、`验签`枚举，加签及验签必传
 
 `HmacAlgorithmEnum` 为`摘要算法`枚举
+
+# 7.加密类知识总结
+
+## AES密钥长度
+
+AES-128 密钥长度 16
+
+AES-192 密钥长度 24
+
+AES-256 密钥长度 32
+
+AES 128位数据块对应偏移量位16位
+
+## 工作模式
+
+ECB(Electronic Code Book)
+
+CBC(Cipher Block Chanining)
+
+CFB(Cipher FeedBack)
+
+OFB(Output FeedBack)
+
+NoPadding 加密数据长度固定为 16 的倍数
+
+PKCS5Padding 最后一组数据块缺失几位就补充几
+
+PKCS7Padding
+
+ISO10126Padding 最后一位为补充的数据长度，其余位补充随机数
+
+Zeros 补 0，原始数据长度为 16 的倍数时，末尾也需补充 16 个 0
+
+对于 AES 加密算法来说，ECB 模式下 PKCS5Padding 与 PKCS7Padding 补齐方式完全一致，
+也就是说 AES/ECB/PKCS5Padding 与 AES/ECB/PKCS7Padding 无区别。
+
+PKCS5Padding 的 blocksize 为 8 字节，而 PKCS7Padding 的 blocksize 可以为 1 到 255 字节。 
+Java 支持 PKCS5Padding 不支持 PKCS7Padding
+
+ECB 模式多次加密结果一致。
+
+CBC 模式多次加密结果不一致。
+
+DES ivKey 长度为 8 位
+
+AES ivKey 长度为 16 位
